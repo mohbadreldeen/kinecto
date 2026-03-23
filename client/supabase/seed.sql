@@ -1,0 +1,3 @@
+-- Local seed entrypoint for Supabase CLI.
+-- Keep this file present to satisfy supabase/config.toml db.seed.sql_paths.
+-- Application-level seed data is handled by: npm run db:seed
