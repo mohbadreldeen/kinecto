@@ -13,6 +13,21 @@ function getDatabaseUrl() {
         throw new Error("DATABASE_URL is required");
     }
 
+    let parsedUrl: URL;
+    try {
+        parsedUrl = new URL(databaseUrl);
+    } catch {
+        throw new Error(
+            "DATABASE_URL is not a valid URL. Ensure it is a full postgres connection string and URL-encode special password characters (for example # as %23)."
+        );
+    }
+
+    if (!parsedUrl.hostname || parsedUrl.hostname === "base") {
+        throw new Error(
+            "DATABASE_URL host is invalid. Check Vercel Environment Variables and use the Supabase pooled host (for example aws-*.pooler.supabase.com)."
+        );
+    }
+
     return databaseUrl;
 }
 
