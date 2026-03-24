@@ -153,6 +153,14 @@ export function OwnerCustomersCrm() {
     const allCurrentPageSelected =
         currentPageCustomerIds.length > 0 &&
         currentPageCustomerIds.every((id) => selectedCustomerIds.includes(id));
+    const newCampaignHref =
+        selectedCustomerIds.length > 0
+            ? `/campaigns/new?${selectedCustomerIds
+                  .map(
+                      (id) => `selectedIds=${encodeURIComponent(id)}`
+                  )
+                  .join("&")}`
+            : "/campaigns/new";
 
     function toggleSelectCustomer(customerId: string) {
         setSelectedCustomerIds((current) =>
@@ -231,7 +239,7 @@ export function OwnerCustomersCrm() {
                         customers
                     </p>
                     <Link
-                        href="/campaigns/new"
+                        href={newCampaignHref}
                         className="button rounded-md border border-slate-300 px-3 py-2 text-md font-semibold text-slate-700 transition hover:border-slate-500"
                     >
                         New campaign
@@ -453,16 +461,7 @@ export function OwnerCustomersCrm() {
                         Clear selection
                     </button>
                     <Link
-                        href={
-                            selectedCustomerIds.length > 0
-                                ? `/campaigns/new?${selectedCustomerIds
-                                      .map(
-                                          (id) =>
-                                              `selectedIds=${encodeURIComponent(id)}`
-                                      )
-                                      .join("&")}`
-                                : "/campaigns/new"
-                        }
+                        href={newCampaignHref}
                         aria-disabled={selectedCustomerIds.length === 0}
                         className={`button rounded-md px-3 py-2 text-md font-semibold transition ${
                             selectedCustomerIds.length > 0
